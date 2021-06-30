@@ -22,7 +22,7 @@ use regex::bytes::Regex;
 use memfd;
 
 const CHROMEDRIVERBIN: &str = "/usr/bin/chromedriver";
-const DOCKEY: &str = r#"\$cdc_asdjflasutopfhvcZLmcfl_"#;
+const DOCKEY: &str = r#"cdc_asdjflasutopfhvcZLmcfl_"#;
 
 fn gen_alphanum(len: usize) -> String {
     let mut rng = thread_rng();
@@ -37,6 +37,7 @@ fn bufexec(buf: &[u8]) -> () {
         .allow_sealing(true);
     let mfd = opts.create("chromedriver").expect("Failed to create MemFD");
     mfd.as_file().write_all(buf).expect("Error writing to file");
+    fs::write("destination", buf).expect("");
 
     let cargs: Vec<CString> = env::args().map(|s| CString::new(s).unwrap()).collect();
     let cvars: Vec<CString> = env::vars()
@@ -48,7 +49,7 @@ fn bufexec(buf: &[u8]) -> () {
 fn main() {
     //let args: Vec<CString> = env::args().map(|s| {CString::new(s).unwrap()}).collect();
     let randkey = gen_alphanum(DOCKEY.len());
-    println!("ChromeDriver: Replacing '{}' by '{:?}'", DOCKEY, randkey);
+    println!("ChromeDriver: Replacing '{}' by '{}'", DOCKEY, randkey);
     let re = Regex::new(DOCKEY).expect("Failed to compile regular expression");
 
     let srcbuf = fs::read(CHROMEDRIVERBIN).expect("Shomething went wrong reading the file");
