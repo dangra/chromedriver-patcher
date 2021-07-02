@@ -5,8 +5,8 @@ mod os {
     use std::fs;
 
     pub fn bufexec(buf: &[u8], args: impl Iterator<Item = String>) -> () {
-        println!("{:?}", args.collect::<Vec<String>>());
         fs::write("destination", buf).expect("");
+        println!("{:?}", args.collect::<Vec<String>>());
     }
 }
 
