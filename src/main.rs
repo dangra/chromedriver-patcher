@@ -5,11 +5,16 @@ mod os;
 mod replace;
 
 fn main() {
-    let binpath = match env::args().skip(1).next() {
+    let mut args = env::args();
+    let cmdname = args.next().unwrap();
+    let binpath = match args.next() {
         Some(path) => path,
-        None => return,
+        None => {
+            println!("{} [COMMAND] [ARGS]...", cmdname); 
+            return
+        },
     };
-    let mut haystack = fs::read(&binpath).expect("Shomething went wrong reading the file");
+    let mut haystack = fs::read(&binpath).expect(&format!("Failed to read {}", binpath));
 
     println!("Patching: {}", binpath);
     replace::by_random(&mut haystack, b"$cdc_asdjflasutopfhvcZLmcfl_");
