@@ -24,5 +24,10 @@ pub fn by_random(haystack: &mut [u8], needle: &[u8]) {
 
 fn gen_alphanum(len: usize) -> Vec<u8> {
     let mut rng = thread_rng();
-    return Alphanumeric {}.sample_string(&mut rng, len).into_bytes();
+    let mut sampled = Alphanumeric {}.sample_string(&mut rng, len).into_bytes();
+    // Identifiers can't start with a number in most cases
+    if b"012345789".contains(&sampled[0]) {
+        sampled[0] = b'_';
+    }
+    return sampled;
 }
