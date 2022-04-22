@@ -1,10 +1,10 @@
 # Patch ChromeDriver
 
-`patch-cd` patches chromedriver binary to remove obvious DOM injections that
-makes it obvious the brwoser is under scripted control.
+`patch-cd` patches chromedriver binary to well known DOM injections that
+leak the browser is under scripted control.
 
-It does so by loading chromedriver binary into memory, modifying pieces of
-information in place respecting binary size, and fexecve'ing directly from
+It does so by loading chromedriver binary into memory, modifying some identifiers
+in place respecting binary size, and fexecve'ing directly from
 memory which doesn't require filesystem write permission of any kind.
 
 For more information on relevant patches:
@@ -20,8 +20,8 @@ For patching and execing directly from memory:
 
 ## Development
 
-`memfd_create` and `fexecve` syscalls are only available on Linux, so fully
-developing requires a linux system (see bellow). But to easy development on
+`memfd_create` and `fexecve` syscalls are only available on Linux, so full
+development environment requires a linux system (see bellow). But to easy development on
 other operating systems, the same functionality was implemented using a named
 temporal file and `execve` syscall.
 
