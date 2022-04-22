@@ -6,18 +6,20 @@ mod replace;
 
 fn main() {
     let mut args = env::args();
-    let cmdname = args.next().unwrap();
-    let binpath = match args.next() {
-        Some(path) => path,
+    let arg0 = args.next().unwrap();
+    let path = match args.next() {
+        Some(v) => v,
         None => {
-            println!("{} [COMMAND] [ARGS]...", cmdname); 
+            println!("{} [COMMAND] [ARGS]...", arg0); 
             return
         },
     };
-    let mut haystack = fs::read(&binpath).expect(&format!("Failed to read {}", binpath));
-
-    println!("Patching: {}", binpath);
-    replace::by_random(&mut haystack, b"$cdc_asdjflasutopfhvcZLmcfl_");
-    replace::by_random(&mut haystack, b"addScriptToEvaluateOnNewDocument");
-    os::bufexec(&haystack, env::args().skip(1))
+    // Read executable from file
+    let mut binary = fs::read(&path).expect(&format!("Failed to read {}", path));
+    // Patch the executable
+    eprintln!("Patching: {}", path);
+    replace::by_random(&mut binary, b"$cdc_asdjflasutopfhvcZLmcfl_");
+    replace::by_random(&mut binary, b"addScriptToEvaluateOnNewDocument");
+    // Replace current proxess with the patched executable
+    os::bufexec(&binary, env::args().skip(1))
 }

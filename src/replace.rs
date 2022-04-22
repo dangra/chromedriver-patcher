@@ -9,7 +9,7 @@ pub fn by(haystack: &mut [u8], needle: &[u8], replaceby: &[u8]) {
         let replaceat = &mut haystack[m..m + needle.len()];
         replaceat.copy_from_slice(replaceby);
     }
-    println!(
+    eprintln!(
         "Replaced {} time(s) '{}' by '{}'",
         times,
         String::from_utf8_lossy(needle),

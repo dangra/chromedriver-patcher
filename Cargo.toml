@@ -1,5 +1,5 @@
 [package]
-name = "chromedriver-wrapper"
+name = "patch-cd"
 version = "0.1.0"
 edition = "2018"
 
@@ -7,7 +7,6 @@ edition = "2018"
 
 [dependencies]
 memfd = '*'
-regex = '1'
 rand = '*'
 nix = '*'
 memchr = '*'

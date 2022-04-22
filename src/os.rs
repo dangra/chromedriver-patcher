@@ -6,7 +6,8 @@ mod os {
 
     pub fn bufexec(buf: &[u8], args: impl Iterator<Item = String>) -> () {
         fs::write("destination", buf).expect("");
-        println!("{:?}", args.collect::<Vec<String>>());
+        eprintln!("{:?}", args.collect::<Vec<String>>());
+        
     }
 }
 
