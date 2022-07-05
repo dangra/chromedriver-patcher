@@ -15,7 +15,7 @@ fn main() {
         },
     };
     // Read executable from file
-    let mut binary = fs::read(&path).expect(&format!("Failed to read {}", path));
+    let mut binary = fs::read(&path).unwrap_or_else(|_| panic!("Failed to read {}", path));
     // Patch the executable
     eprintln!("Patching: {}", path);
     replace::by_random(&mut binary, b"$cdc_asdjflasutopfhvcZLmcfl_");

@@ -1,10 +1,10 @@
-pub use self::os::bufexec;
+pub use self::_os::bufexec;
 
 #[cfg(not(target_os = "linux"))]
-mod os {
+mod _os {
     use std::fs;
 
-    pub fn bufexec(buf: &[u8], args: impl Iterator<Item = String>) -> () {
+    pub fn bufexec(buf: &[u8], args: impl Iterator<Item = String>) {
         fs::write("destination", buf).expect("");
         eprintln!("{:?}", args.collect::<Vec<String>>());
         
@@ -12,7 +12,7 @@ mod os {
 }
 
 #[cfg(target_os = "linux")]
-mod os {
+mod _os {
     use memfd;
     use nix;
     use std::env;

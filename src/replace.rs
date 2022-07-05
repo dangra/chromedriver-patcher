@@ -3,7 +3,7 @@ use rand::distributions::{Alphanumeric, DistString};
 use rand::thread_rng;
 
 pub fn by(haystack: &mut [u8], needle: &[u8], replaceby: &[u8]) {
-    let matches: Vec<usize> = memmem::find_iter(&haystack[..], needle).collect();
+    let matches: Vec<usize> = memmem::find_iter(haystack, needle).collect();
     let times = matches.len();
     for m in matches {
         let replaceat = &mut haystack[m..m + needle.len()];
@@ -29,5 +29,5 @@ fn gen_alphanum(len: usize) -> Vec<u8> {
     if b"012345789".contains(&sampled[0]) {
         sampled[0] = b'_';
     }
-    return sampled;
+    sampled
 }
