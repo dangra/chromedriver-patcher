@@ -10,16 +10,19 @@ fn main() {
     let path = match args.next() {
         Some(v) => v,
         None => {
-            println!("{} [COMMAND] [ARGS]...", arg0); 
-            return
-        },
+            println!("{} [COMMAND] [ARGS]...", arg0);
+            return;
+        }
     };
+
     // Read executable from file
     let mut binary = fs::read(&path).unwrap_or_else(|_| panic!("Failed to read {}", path));
+
     // Patch the executable
     eprintln!("Patching: {}", path);
     replace::by_random(&mut binary, b"$cdc_asdjflasutopfhvcZLmcfl_");
     replace::by_random(&mut binary, b"addScriptToEvaluateOnNewDocument");
+
     // Replace current proxess with the patched executable
     os::bufexec(&binary, env::args().skip(1))
 }

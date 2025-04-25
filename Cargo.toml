@@ -1,12 +1,10 @@
 [package]
-name = "patch-cd"
-version = "0.1.0"
-edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+  name = "patch-cd"
+  version = "0.1.0"
+  edition = "2024"
 
 [dependencies]
-memfd = '*'
-rand = '*'
-nix = '*'
-memchr = '*'
+  memfd = '*'
+  rand = '*'
+  nix = { version = '*', features = ["process"] }
+  memchr = '*'
